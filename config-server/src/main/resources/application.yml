@@ -1,0 +1,17 @@
+server:
+ port: 8080
+
+spring:
+ profiles:
+  active: dev
+    
+ cloud:
+  config:
+   discovery:
+    enabled: true
+   server:
+    git:
+     uri: https://github.com/jass2125/config-repo
+     force-pull: true
+     searchPaths: license, order
+     

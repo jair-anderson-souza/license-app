@@ -1,0 +1,22 @@
+server:
+  port: 9098
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:9091/eureka
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: new-order
+          content-type: application/json
+      kafka:
+        binder:
+          zkNodes: localhost
+          brokers: localhost

@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: license-service
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://localhost:8080
