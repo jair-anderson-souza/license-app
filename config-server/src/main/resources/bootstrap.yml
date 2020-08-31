@@ -1,4 +1,4 @@
 spring:
  application:
-  name: delivery-config-server
+  name: config-server
   
