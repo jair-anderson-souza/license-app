@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EnableBinding(Processor.class)
-public class EventListener {
+public class EventPublisher {
 
     @Autowired
     private Processor processor;
 
     public void handleNewOrder(final License license) {
-        processor.output().send(MessageBuilder.withPayload(license).build());
+        this.processor.output().send(MessageBuilder.withPayload(license).build());
     }
 
 }

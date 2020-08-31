@@ -1,9 +1,9 @@
 package io.github.jass2125.licenseservice.services;
 
-import io.github.jass2125.licenseservice.mapper.LicenseMapper;
-import io.github.jass2125.licenseservice.config.OrderFeignClient;
 import io.github.jass2125.licenseservice.exceptions.LicenseNotFoundException;
-import io.github.jass2125.licenseservice.integration.EventListener;
+import io.github.jass2125.licenseservice.integration.EventPublisher;
+import io.github.jass2125.licenseservice.integration.feign.OrderFeignClient;
+import io.github.jass2125.licenseservice.mapper.LicenseMapper;
 import io.github.jass2125.licenseservice.model.License;
 import io.github.jass2125.licenseservice.model.LicenseDTO;
 import io.github.jass2125.licenseservice.repositories.LicenseRepository;
@@ -23,7 +23,7 @@ public class LicenseService {
     private OrderFeignClient orderFeignRepository;
 
     @Autowired
-    private EventListener eventProducer;
+    private EventPublisher eventPublisher;
 
     public List<LicenseDTO> findAll() {
         Iterable<License> iterable = this.licenseRepository.findAll();
@@ -38,16 +38,15 @@ public class LicenseService {
         final var license = this.licenseRepository.findById(id).orElseThrow(() -> new LicenseNotFoundException("License not found") );
         final var orderDTO = this.orderFeignRepository.getOrder(id);
 
-        var lic = new LicenseDTO();
-        lic.setName(license.getName());
-        lic.setOrderDTO(orderDTO);
-        return lic;
+        var licenseDTO = LicenseMapper.INSTANCE.toDTO(license);
+        licenseDTO.setOrderDTO(orderDTO);
+        return licenseDTO;
     }
 
 
     public LicenseDTO save(final License license) {
         var lic = this.licenseRepository.save(license);
-        this.eventProducer.handleNewOrder(lic);
+        this.eventPublisher.handleNewOrder(lic);
         return LicenseMapper.INSTANCE.toDTO(lic);
     }
 }

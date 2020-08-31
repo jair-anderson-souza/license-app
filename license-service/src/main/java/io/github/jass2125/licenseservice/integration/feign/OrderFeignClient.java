@@ -1,4 +1,4 @@
-package io.github.jass2125.licenseservice.config;
+package io.github.jass2125.licenseservice.integration.feign;
 
 import io.github.jass2125.licenseservice.model.OrderDTO;
 import org.springframework.cloud.openfeign.FeignClient;
