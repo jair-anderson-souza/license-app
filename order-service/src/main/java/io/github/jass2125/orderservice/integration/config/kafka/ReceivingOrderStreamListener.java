@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
+import io.github.jass2125.orderservice.model.enums.StatusEnum;
 
 
 @Component
@@ -21,7 +22,10 @@ public class ReceivingOrderStreamListener {
         System.out.println("License:" + license);
 //        log.info("Receiving {}", license);
 //        final var order = Order.builder().licenseId(license.getId()).status(StatusEnum.CREATED).build();
-        this.orderService.sendOrder(new Order());
+        var order = new Order();
+        order.setLicenseId(license.getId());
+        order.setStatus(StatusEnum.CREATED);
+        this.orderService.sendOrder(order);
     }
 
 }

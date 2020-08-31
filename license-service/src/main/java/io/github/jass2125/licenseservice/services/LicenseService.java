@@ -23,7 +23,7 @@ public class LicenseService {
     private OrderFeignClient orderFeignRepository;
 
     @Autowired
-    private EventListener newOrderStreamListener;
+    private EventListener eventProducer;
 
     public List<LicenseDTO> findAll() {
         Iterable<License> iterable = this.licenseRepository.findAll();
@@ -35,15 +35,11 @@ public class LicenseService {
     }
 
     public LicenseDTO findById(Long id) {
-        final var license = this.licenseRepository.findById(id);
-        if (license.isEmpty()) {
-            throw new LicenseNotFoundException("License not found");
-        }
-        final var l = license.get();
+        final var license = this.licenseRepository.findById(id).orElseThrow(() -> new LicenseNotFoundException("License not found") );
         final var orderDTO = this.orderFeignRepository.getOrder(id);
 
         var lic = new LicenseDTO();
-        lic.setName(l.getName());
+        lic.setName(license.getName());
         lic.setOrderDTO(orderDTO);
         return lic;
     }
@@ -51,7 +47,7 @@ public class LicenseService {
 
     public LicenseDTO save(final License license) {
         var lic = this.licenseRepository.save(license);
-        this.newOrderStreamListener.handleNewOrder(lic);
+        this.eventProducer.handleNewOrder(lic);
         return LicenseMapper.INSTANCE.toDTO(lic);
     }
 }
