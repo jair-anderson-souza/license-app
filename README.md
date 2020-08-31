@@ -21,4 +21,4 @@ This project was developed with [Spring Boot](https://spring.io/guides/gs/spring
 
 ## Development server
 
-All applications are running in dev profile
+All applications must be running in dev profile
