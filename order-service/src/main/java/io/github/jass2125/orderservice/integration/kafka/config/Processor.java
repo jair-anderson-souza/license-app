@@ -1,4 +1,4 @@
-package io.github.jass2125.orderservice.integration.config.kafka;
+package io.github.jass2125.orderservice.integration.kafka.config;
 
 import org.springframework.cloud.stream.messaging.Sink;
 

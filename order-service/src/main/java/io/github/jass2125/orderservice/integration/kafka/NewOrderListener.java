@@ -1,5 +1,6 @@
-package io.github.jass2125.orderservice.integration.config.kafka;
+package io.github.jass2125.orderservice.integration.kafka;
 
+import io.github.jass2125.orderservice.integration.kafka.config.Processor;
 import io.github.jass2125.orderservice.model.License;
 import io.github.jass2125.orderservice.model.Order;
 import io.github.jass2125.orderservice.service.OrderService;
@@ -12,16 +13,13 @@ import io.github.jass2125.orderservice.model.enums.StatusEnum;
 
 @Component
 @EnableBinding(Processor.class)
-public class ReceivingOrderStreamListener {
+public class NewOrderListener {
 
     @Autowired
     private OrderService orderService;
 
     @StreamListener(Processor.INPUT)
     public void handleNewOrder(License license) {
-        System.out.println("License:" + license);
-//        log.info("Receiving {}", license);
-//        final var order = Order.builder().licenseId(license.getId()).status(StatusEnum.CREATED).build();
         var order = new Order();
         order.setLicenseId(license.getId());
         order.setStatus(StatusEnum.CREATED);

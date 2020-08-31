@@ -18,11 +18,8 @@ public class OrderService {
     }
 
     public OrderDTO findById(Long id) {
-        final var order = this.orderRepository.findById(id);
-        if (order.isEmpty()) {
-            return null;
-        }
-        return OrderMapper.INSTANCE.toDTO(order.get());
+        final var order = this.orderRepository.findById(id).orElse(null);
+        return OrderMapper.INSTANCE.toDTO(order);
     }
 
 }
