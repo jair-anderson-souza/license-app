@@ -10,6 +10,7 @@ eureka:
       defaultZone: http://localhost:9091/eureka
 
 spring:
+#  redis:
   cloud:
     stream:
       bindings:

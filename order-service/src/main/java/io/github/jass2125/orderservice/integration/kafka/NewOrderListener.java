@@ -20,7 +20,7 @@ public class NewOrderListener {
 
     @StreamListener(Processor.INPUT)
     public void handleNewOrder(License license) {
-        var order = new Order();
+        var order = new Order(); 
         order.setLicenseId(license.getId());
         order.setStatus(StatusEnum.CREATED);
         this.orderService.sendOrder(order);
