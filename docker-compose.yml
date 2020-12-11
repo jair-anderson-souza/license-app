@@ -27,3 +27,10 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
+  redis:
+    image: redis
+    command: redis-server -requirepass redis
+    ports:
+      - 6379:6379
+
+

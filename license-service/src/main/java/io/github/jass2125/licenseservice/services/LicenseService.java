@@ -9,6 +9,7 @@ import io.github.jass2125.licenseservice.model.LicenseDTO;
 import io.github.jass2125.licenseservice.repositories.LicenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class LicenseService {
     @Autowired
     private EventPublisher eventPublisher;
 
+    @Cacheable(value = "licenses")
     public List<LicenseDTO> findAll() {
         Iterable<License> iterable = this.licenseRepository.findAll();
         List<LicenseDTO> list = new ArrayList<>();

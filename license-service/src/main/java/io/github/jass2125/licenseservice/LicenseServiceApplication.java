@@ -7,11 +7,12 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @EnableFeignClients
 @RefreshScope
+@EnableCaching
 public class LicenseServiceApplication {
 
     public static void main(String[] args) {
