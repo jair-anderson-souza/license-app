@@ -1,6 +1,7 @@
 package io.github.jass2125.licenseservice.model;
+import java.io.Serializable;
 
-public class OrderDTO {
+public class OrderDTO implements Serializable {
 
     private Long id;
     private String status;

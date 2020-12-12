@@ -10,6 +10,7 @@ import io.github.jass2125.licenseservice.repositories.LicenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class LicenseService {
     @Autowired
     private EventPublisher eventPublisher;
 
-    @Cacheable(value = "licenses")
+    @Cacheable(cacheNames = "License", key = "#root.method.name")
     public List<LicenseDTO> findAll() {
         Iterable<License> iterable = this.licenseRepository.findAll();
         List<LicenseDTO> list = new ArrayList<>();
@@ -36,6 +37,7 @@ public class LicenseService {
         return list;
     }
 
+    @Cacheable(cacheNames = "License", key = "#id")
     public LicenseDTO findById(Long id) {
         final var license = this.licenseRepository.findById(id).orElseThrow(() -> new LicenseNotFoundException("License not found") );
         final var orderDTO = this.orderFeignRepository.getOrder(id);
@@ -45,7 +47,7 @@ public class LicenseService {
         return licenseDTO;
     }
 
-
+    @CacheEvict(cacheNames = "License", allEntries = true)
     public LicenseDTO save(final License license) {
         var lic = this.licenseRepository.save(license);
         this.eventPublisher.handleNewOrder(lic);

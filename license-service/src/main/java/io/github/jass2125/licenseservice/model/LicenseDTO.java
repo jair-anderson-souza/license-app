@@ -1,6 +1,7 @@
 package io.github.jass2125.licenseservice.model;
+import java.io.Serializable;
 
-public class LicenseDTO  {
+public class LicenseDTO  implements Serializable {
 
     private Long id;
 
