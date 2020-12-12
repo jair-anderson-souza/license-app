@@ -1,5 +1,6 @@
-package io.github.jass2125.licenseservice.model;
+package io.github.jass2125.licenseservice.integration.events;
 
+import io.github.jass2125.licenseservice.model.License;
 import org.springframework.context.ApplicationEvent;
 
 public class LicenseEvent extends ApplicationEvent {
@@ -19,10 +20,4 @@ public class LicenseEvent extends ApplicationEvent {
         this.license = license;
     }
 
-    @Override
-    public String toString() {
-        return "LicenseEvent{" +
-                "license=" + license +
-                '}';
-    }
 }

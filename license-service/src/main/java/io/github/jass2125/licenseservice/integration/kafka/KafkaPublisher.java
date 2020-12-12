@@ -1,4 +1,4 @@
-package io.github.jass2125.licenseservice.integration.kafka.producer;
+package io.github.jass2125.licenseservice.integration.kafka;
 
 import io.github.jass2125.licenseservice.model.License;
 import org.springframework.beans.factory.annotation.Autowired;
