@@ -13,7 +13,7 @@ public class KafkaPublisher {
     @Autowired
     private Processor processor;
 
-    public void handleNewOrder(final License license) {
+    public void send(final License license) {
         this.processor.output().send(MessageBuilder.withPayload(license).build());
     }
 

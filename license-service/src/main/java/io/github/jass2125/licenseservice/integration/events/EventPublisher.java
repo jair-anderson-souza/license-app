@@ -7,12 +7,13 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
+@Async
 public class EventPublisher implements ApplicationEventPublisherAware {
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
-    @Async
+
     public void publish(final LicenseEvent licenseEvent) {
         this.applicationEventPublisher.publishEvent(licenseEvent);
     }
