@@ -33,4 +33,21 @@ services:
     ports:
       - 6379:6379
 
+#  agent:
+#    container_name: newrelic-infra
+#    image: newrelic/infrastructure:latest
+#    cap_add:
+#      - SYS_PTRACE
+#    network_mode: host
+#    pid: host
+#    privileged: true
+#    volumes:
+#      - "/:/host:ro"
+#      - "/var/run/docker.sock:/var/run/docker.sock"
+#    environment:
+#      NRIA_LICENSE_KEY: "0fc9dd7512b48399e3129c4d1ebe2f0f7bc6NRAL"
+#    restart: unless-stopped
+
+
+
 

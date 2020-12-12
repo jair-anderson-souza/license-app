@@ -1,11 +1,13 @@
 package io.github.jass2125.licenseservice.services;
 
 import io.github.jass2125.licenseservice.exceptions.LicenseNotFoundException;
-import io.github.jass2125.licenseservice.integration.EventPublisher;
+import io.github.jass2125.licenseservice.integration.kafka.producer.KafkaPublisher;
+import io.github.jass2125.licenseservice.integration.events.EventPublisher;
 import io.github.jass2125.licenseservice.integration.feign.OrderFeignClient;
 import io.github.jass2125.licenseservice.mapper.LicenseMapper;
 import io.github.jass2125.licenseservice.model.License;
 import io.github.jass2125.licenseservice.model.LicenseDTO;
+import io.github.jass2125.licenseservice.model.LicenseEvent;
 import io.github.jass2125.licenseservice.repositories.LicenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +21,15 @@ import java.util.List;
 public class LicenseService {
 
     @Autowired
+    private EventPublisher eventPublisher;
+
+    @Autowired
     private LicenseRepository licenseRepository;
 
     @Autowired
     private OrderFeignClient orderFeignRepository;
 
-    @Autowired
-    private EventPublisher eventPublisher;
+
 
     @Cacheable(cacheNames = "License", key = "#root.method.name")
     public List<LicenseDTO> findAll() {
@@ -50,7 +54,10 @@ public class LicenseService {
     @CacheEvict(cacheNames = "License", allEntries = true)
     public LicenseDTO save(final License license) {
         var lic = this.licenseRepository.save(license);
-        this.eventPublisher.handleNewOrder(lic);
+        System.out.println("1 - License: " + lic);
+        var licEvent = new LicenseEvent(license);
+        this.eventPublisher.publish(licEvent);
+//        this.eventPublisher.handleNewOrder(lic);
         return LicenseMapper.INSTANCE.toDTO(lic);
     }
 }

@@ -72,4 +72,11 @@ public class License implements Serializable {
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
     }
+
+    @Override
+    public String toString() {
+        return "License{" +
+                "id=" + id +
+                ", productName='" + productName;
+    }
 }

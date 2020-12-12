@@ -22,3 +22,6 @@ This project was developed with [Spring Boot](https://spring.io/guides/gs/spring
 ## Development server
 
 All applications must be running in dev profile
+
+
+java -javaagent:/opt/newrelic/newrelic.jar -jar /home/jair-silva/workspace/license-app/license-service/target/license-service-1.0.jar
